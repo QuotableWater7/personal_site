@@ -16,6 +16,7 @@ gem 'debugger', group: [:development, :test]
 
 # added by me
 gem 'bloggy'
+gem 'haml-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
