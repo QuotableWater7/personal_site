@@ -6,13 +6,9 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    .app-container
-      %nav.navbar.navbar-default
-        .container-fluid
-          .navbar-header
-            %button.navbar-toggle.collapsed{ type: 'button', data: { toggle: 'collapse', target: '#navbar' } }
-              %span.icon-bar testing
-      .container
+    .app-wrapper
+      = render 'layouts/header'
+      .container-fluid.app-body
         .row
           .col-md-12
             = yield
