@@ -21,4 +21,4 @@ gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 
 # Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+gem 'capistrano-rails', group: :development
