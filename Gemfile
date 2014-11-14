@@ -17,6 +17,8 @@ gem 'debugger', group: [:development, :test]
 # added by me
 gem 'bloggy'
 gem 'haml-rails'
+gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
