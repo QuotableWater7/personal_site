@@ -3,14 +3,21 @@
   %br
   %h3
     I enjoy making music and playing with the web.
-%section#portfiolio
-  .section-content
-    %h5.text-center Portfolio
-%section#blog
-  .section-content
-    %h5.text-center Blog
-    blah this is blog section
-%section#music
-  .section-content
-    %h5.text-center My Music
-    blah this is music section
+.cards
+  #portfolio.card
+    %h4.text-center Portfolio
+    %ul
+      %li Project A
+      %li Project B
+      %li Project C
+  #blog.card
+    %h4.text-center Blog
+    .blog-article Article One
+    .blog-article Article Two
+    .blog-article Article Three
+  #music.card
+    %h4.text-center My Music
+    %ul
+      %li= link_to 'SoundCloud', 'soundcloud.com/bowlah'
+      %li= link_to 'Pure Volume', 'purevolume.com/jtbowler'
+      %li= link_to 'The Release', 'thereleasesf.com'

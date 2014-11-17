@@ -61,3 +61,36 @@ section {
   color: white;
   background: rgba(0, 0, 0, 0.8);
 }
+
+#portfolio {
+  border: 1px solid #f22;
+}
+
+#blog {
+  border: 1px solid #f62;
+}
+
+#music {
+  border: 1px solid #7c4;
+}
+
+.cards {
+  width: 850px;
+  margin: auto;
+}
+
+.card {
+  display: inline-block;
+  width: 260px;
+  margin: 10px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  vertical-align: top;
+  height: 350px;
+  border-radius: 6px;
+
+  ul {
+    padding-left: 20px;
+  }
+}
