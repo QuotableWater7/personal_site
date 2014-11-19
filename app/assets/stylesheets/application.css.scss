@@ -10,6 +10,13 @@ html, body {
   min-height: 100%;
   margin: 0;
   padding: $header-height/2 0 0 0;
+  background: black;
+}
+
+.navbar {
+  height: 80px;
+  background: #333;
+  padding: 10px;
 }
 
 .app-wrapper {
