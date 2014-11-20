@@ -97,6 +97,23 @@ section {
   height: 350px;
   border-radius: 6px;
 
+  -webkit-transform: rotate3d(0, 1, 1, -5deg); /* Chrome, Safari, Opera */
+  transform: rotate3d(0, 1, 1, -5deg);
+
+  -webkit-transition-duration: 0.8s;
+  -moz-transition-duration: 0.8s;
+  -o-transition-duration: 0.8s;
+  transition-duration: 0.8s;
+
+  &:hover {
+    -webkit-transform: rotate3d(0, 1, 1, 0deg);
+    -moz-transform: rotate3d(0, 1, 1, 0deg);
+    -o-transform: rotate3d(0, 1, 1, 0deg);
+    // @-moz-keyframes spin { 100% { -moz-transform: rotate3d(0, 1, 1, 10deg); } }
+    // @-webkit-keyframes spin { 100% { -webkit-transform: rotate3d(0, 1, 1, 10deg); } }
+    // @keyframes spin { 100% { -webkit-transform: rotate3d(0, 1, 1, 10deg); transform: rotate3d(0, 1, 1, 10deg); } }
+  }
+
   ul {
     padding-left: 20px;
   }
