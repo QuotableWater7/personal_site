@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'pages#index'
 
   get '/portfolio' => 'pages#portfolio'
+  get '/music' => 'pages#music'
 
   resources :pages, only: :index
 
