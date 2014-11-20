@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'pages#index'
 
+  get '/portfolio' => 'pages#portfolio'
+
   resources :pages, only: :index
 
   # Example of regular route:

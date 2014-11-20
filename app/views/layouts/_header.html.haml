@@ -1,7 +1,7 @@
 .header
-  .pull-left  JT BOWLER
+  .pull-left= link_to 'JT BOWLER', root_path, class: 'anchor-link'
   .pull-right
     %ul.list-inline
-      %li= link_to 'Portfolio', '#portfolio', class: 'anchor-link'
-      %li= link_to 'Blog', '#blog', class: 'anchor-link'
-      %li= link_to 'Music', '#music', class: 'anchor-link'
+      %li= link_to 'Portfolio', '/portfolio', class: 'anchor-link'
+      %li= link_to 'Blog', '/blog', class: 'anchor-link'
+      %li= link_to 'Music', '/music', class: 'anchor-link'
