@@ -71,14 +71,41 @@ section {
 
 #portfolio {
   border: 1px solid #f22;
+
+  &:hover {
+    background-color: #f22;
+    -webkit-transition: background-color 1000ms linear;
+    -moz-transition: background-color 1000ms linear;
+    -o-transition: background-color 1000ms linear;
+    -ms-transition: background-color 1000ms linear;
+    transition: background-color 1000ms linear;
+  }
 }
 
 #blog {
   border: 1px solid #f62;
+
+  &:hover {
+    background-color: #f62;
+    -webkit-transition: background-color 1000ms linear;
+    -moz-transition: background-color 1000ms linear;
+    -o-transition: background-color 1000ms linear;
+    -ms-transition: background-color 1000ms linear;
+    transition: background-color 1000ms linear;
+  }
 }
 
 #music {
   border: 1px solid #7c4;
+
+  &:hover {
+    background-color: #7c4;
+    -webkit-transition: background-color 1000ms linear;
+    -moz-transition: background-color 1000ms linear;
+    -o-transition: background-color 1000ms linear;
+    -ms-transition: background-color 1000ms linear;
+    transition: background-color 1000ms linear;
+  }
 }
 
 .cards {
@@ -100,18 +127,15 @@ section {
   -webkit-transform: rotate3d(0, 1, 1, -5deg); /* Chrome, Safari, Opera */
   transform: rotate3d(0, 1, 1, -5deg);
 
-  -webkit-transition-duration: 0.8s;
-  -moz-transition-duration: 0.8s;
-  -o-transition-duration: 0.8s;
-  transition-duration: 0.8s;
+  -webkit-transition-duration: 1000ms;
+  -moz-transition-duration: 1000ms;
+  -o-transition-duration: 1000ms;
+  transition-duration: 1000ms;
 
   &:hover {
     -webkit-transform: rotate3d(0, 1, 1, 0deg);
     -moz-transform: rotate3d(0, 1, 1, 0deg);
     -o-transform: rotate3d(0, 1, 1, 0deg);
-    // @-moz-keyframes spin { 100% { -moz-transform: rotate3d(0, 1, 1, 10deg); } }
-    // @-webkit-keyframes spin { 100% { -webkit-transform: rotate3d(0, 1, 1, 10deg); } }
-    // @keyframes spin { 100% { -webkit-transform: rotate3d(0, 1, 1, 10deg); transform: rotate3d(0, 1, 1, 10deg); } }
   }
 
   ul {
