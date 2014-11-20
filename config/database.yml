@@ -14,4 +14,6 @@ production:
   adapter: postgresql
   database: personal_prod
   encoding: unicode
+  username: jbowler2400
+  password: <%= begin IO.read("/home/jbowler2400/webapps/personal/db/key.txt") rescue "" end %>
   pool: 25
