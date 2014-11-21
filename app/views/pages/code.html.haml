@@ -54,7 +54,7 @@
             module ClassMethods
               def publish(*args)
                 meth = args.shift
-                subscribers.each { |subscriber| subscriber.notify(meth, name, *args) }
+                subscribers.each { |subscriber| subscriber.send(meth, name, *args) }
               end
 
               def subscribe(subscriber)
@@ -74,6 +74,19 @@
             end
           end
 
+          module Subscriber
+            module ClassMethods
+              # this is basically just alias_method
+              def subscribe_to(meth, handle_with: :method_missing)
+                define_method(meth) { |*args| send(handle_with, *args) }
+              end
+            end
+
+            def self.included(base)
+              base.send :extend, ClassMethods
+            end
+          end
+
           class Newspaper
             include Publisher
 
@@ -84,11 +97,11 @@
           end
 
           class Person
-            def notify(meth, *args)
-              send(meth, *args)
-            end
+            include Subscriber
 
-            def print_news(newspaper, news)
+            subscribe_to :print_news, handle_with: :read_news
+
+            def read_news(newspaper, news)
               puts "\#{newspaper} says: \#{news}"
             end
           end
@@ -101,5 +114,7 @@
 
           boston_globe.publish(:print_news, 'It now costs $300 to see a Sox game.')
           # Boston Globe says: It now costs $300 to see a Sox game!
+
           hudson_sun.publish(:print_news, 'Drew can play a mean trumpet.')
           # Hudson Sun says: Drew can play a mean trumpet.
+
