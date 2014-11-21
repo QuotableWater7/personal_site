@@ -42,6 +42,7 @@ GEM
     capistrano-rails (1.1.2)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
+    coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -61,6 +62,9 @@ GEM
     execjs (2.2.2)
     haml (4.0.5)
       tilt
+    haml-coderay (0.2.0)
+      coderay
+      haml
     haml-rails (0.5.3)
       actionpack (>= 4.0.1)
       activesupport (>= 4.0.1)
@@ -160,7 +164,9 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootstrap-sass (~> 3.3.1)
   capistrano-rails
+  coderay (~> 1.1.0)
   debugger
+  haml-coderay
   haml-rails
   jquery-rails
   pg
