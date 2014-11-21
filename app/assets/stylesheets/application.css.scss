@@ -6,6 +6,7 @@ $header-height: 100px;
 $footer-height: 60px;
 
 $card-border-width: 2px;
+$light-blue: #aaccef;
 
 html, body {
   height: 100%;
@@ -13,6 +14,15 @@ html, body {
   margin: 0;
   padding: $header-height/2 0 0 0;
   background: black;
+  color: #ccc;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $light-blue;
+}
+
+.disclaimer {
+  color: yellow;
 }
 
 .navbar {
