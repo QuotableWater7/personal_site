@@ -75,15 +75,19 @@
           end
 
           module Subscriber
-            module ClassMethods
-              # this is basically just alias_method
-              def subscribe_to(meth, handle_with: :method_missing)
-                define_method(meth) { |*args| send(handle_with, *args) }
-              end
+            def subscribe_to(meth, handle_with: :method_missing)
+              define_method(meth) { |*args| send(handle_with, *args) }
+            end
+          end
+
+          module NewspaperSubscriber
+            def read_news(newspaper, news)
+              puts "\#{newspaper} says: \#{news}"
             end
 
             def self.included(base)
-              base.send :extend, ClassMethods
+              base.send :extend, Subscriber
+              base.send :subscribe_to, :print_news, handle_with: :read_news
             end
           end
 
@@ -97,13 +101,7 @@
           end
 
           class Person
-            include Subscriber
-
-            subscribe_to :print_news, handle_with: :read_news
-
-            def read_news(newspaper, news)
-              puts "\#{newspaper} says: \#{news}"
-            end
+            include NewspaperSubscriber
           end
 
           boston_globe = Newspaper.new('Boston Globe')
@@ -117,4 +115,3 @@
 
           hudson_sun.publish(:print_news, 'Drew can play a mean trumpet.')
           # Hudson Sun says: Drew can play a mean trumpet.
-
