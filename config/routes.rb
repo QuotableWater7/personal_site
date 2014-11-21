@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'pages#index'
 
-  get '/portfolio' => 'pages#portfolio'
+  get '/code' => 'pages#code'
   get '/music' => 'pages#music'
 
   resources :pages, only: :index
