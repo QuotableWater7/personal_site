@@ -46,22 +46,21 @@
         %h1 Ruby Snippets
         %br
         %h4 Observer Pattern
-        %p I'm trying to deepen my understanding of how Ruby does it's magic.  This is a [very] basic implementation of the observer pattern.
+        %p I'm basically trying to deepen my understanding of how Ruby does it's magic.  This is a [very] basic implementation of the observer pattern.
         :coderay
           #!ruby
 
           module Publisher
             module ClassMethods
               def publish(*args)
-                meth = args.shift
-                subscribers.each { |subscriber| subscriber.notify(meth, name, *args) }
+                subscribers.each { |subscriber| subscriber.notify(*args) }
               end
 
-              def subscribe(subscriber)
+              def add_subscriber(subscriber)
                 subscribers << subscriber
               end
 
-              def unsubscribe(subscriber)
+              def remove_subscriber(subscriber)
                 subscribers - [subscriber]
               end
             end
@@ -69,37 +68,54 @@
             def self.included(base)
               base.class_eval do
                 include ClassMethods
-                send(:attr_accessor, :subscribers, :name)
+                send(:attr_accessor, :subscribers)
               end
             end
           end
 
+          module Subscriber
+            module ClassMethods
+              def subscribe_to(publisher)
+                publisher.add_subscriber(self)
+              end
+
+              def unsubscribe_from(publisher)
+                publisher.remove_subscriber(self)
+              end
+            end
+
+            def self.included(base)
+              base.class_eval do
+                include ClassMethods
+              end
+            end
+          end
+
+          // some simple classes to demonstrate what's happening...
           class Newspaper
             include Publisher
 
-            def initialize(name)
+            def initialize
               self.subscribers = []
-              self.name = name
             end
           end
 
           class Person
-            def notify(meth, *args)
-              send(meth, *args)
+            include Subscriber
+
+            def notify(method, *args)
+              send(method, *args)
             end
 
-            def print_news(newspaper, news)
-              puts "\#{newspaper} says: \#{news}"
+            def read_news(news)
+              puts "Today's news: \#{news}"
             end
           end
 
-          boston_globe = Newspaper.new('Boston Globe')
-          hudson_sun = Newspaper.new('Hudson Sun')
-          sports_fan = Person.new
+          n = Newspaper.new
+          p = Person.new
 
-          [boston_globe, hudson_sun].each { |newspapah| newspapah.subscribe(sports_fan)}
+          p.subscribe_to(n)
+          n.publish(:read_news, 'You are still alive!')
 
-          boston_globe.publish(:print_news, 'It now costs $300 to see a Sox game.')
-          # Boston Globe says: It now costs $300 to see a Sox game!
-          hudson_sun.publish(:print_news, 'Drew can play a mean trumpet.')
-          # Hudson Sun says: Drew can play a mean trumpet.
+          # Today's news: You are still alive!
