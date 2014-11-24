@@ -17,7 +17,6 @@ gem 'haml-rails'
 gem 'coderay', '~> 1.1.0'   # syntax highlighting
 gem 'haml-coderay'
 
-
 group :production do
   gem 'pg'
   gem 'unicorn'
