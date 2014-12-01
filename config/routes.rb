@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
   root 'pages#index'
-
-  get '/code' => 'pages#code'
+  get '/about' => 'pages#about'
   get '/music' => 'pages#music'
 
-  resources :pages, only: :index
+  get '/blog/*' => 'blog#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

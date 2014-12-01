@@ -3,7 +3,7 @@ class PagesController < ApplicationController
   def index
   end
 
-  def code
+  def about
   end
 
   def music
