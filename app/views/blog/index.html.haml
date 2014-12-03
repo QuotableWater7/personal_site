@@ -1,117 +1,115 @@
-.app-body
-  .container-fluid.content-area
-    .row
-      .col-md-12
-        %span.disclaimer Disclaimer: &nbsp;
-        This code isn't particularly groundbreaking, but I'm keeping a list of code I find thought-provoking or useful.
-    .row
-      .col-md-12
-        %h1 JavaScript Snippets
-        %br
-        %h4 Delegator Pattern
-        :coderay
-          #!javascript
-
-          /*
-           * At work, we had several objects that received a method call and
-           * passed that message to one of the objects it was the owner of.
-           * Instead of having these custom methods, I wrote a delegator to
-           * write those methods automatically.
-           */
-
-          Object.prototype.delegate = function (methods, opts) {
-            var self = this;
-            if (_.isString(methods)) { methods = [methods]; }
-
-            _.each(methods, function (method) {
-              self[method] = function () {
-                var receiver = self[opts.to];
-                return receiver[method].apply(receiver, arguments);
-              };
-            });
-          };
-
-          // simple usage example...
-          var musicBox = {
-            hendrix: {
-              playGuitar: function () { console.log('twanggggg'); }
-            }
-          }
-
-          musicBox.delegate('playGuitar', { to: 'Hendrix' });
-          musicBox.playGuitar();  //  console:  twanggggg
+.row
+  .col-md-12
+    %span.disclaimer Disclaimer: &nbsp;
+    This code isn't particularly groundbreaking, but I'm keeping a list of code I find thought-provoking or useful.
+.row
+  .col-md-12
+    %h1 JavaScript Snippets
     %br
-    .row
-      .col-md-12
-        %h1 Ruby Snippets
-        %br
-        %h4 Observer Pattern
-        %p I'm trying to deepen my understanding of how Ruby does it's magic.  This is a [very] basic implementation of the observer pattern.
-        :coderay
-          #!ruby
+    %h4 Delegator Pattern
+    :coderay
+      #!javascript
 
-          module Publisher
-            module ClassMethods
-              def publish(*args)
-                meth = args.shift
-                subscribers.each { |subscriber| subscriber.send(meth, name, *args) }
-              end
+      /*
+       * At work, we had several objects that received a method call and
+       * passed that message to one of the objects it was the owner of.
+       * Instead of having these custom methods, I wrote a delegator to
+       * write those methods automatically.
+       */
 
-              def subscribe(subscriber)
-                subscribers << subscriber
-              end
+      Object.prototype.delegate = function (methods, opts) {
+        var self = this;
+        if (_.isString(methods)) { methods = [methods]; }
 
-              def unsubscribe(subscriber)
-                subscribers.delete(subscriber)
-              end
-            end
+        _.each(methods, function (method) {
+          self[method] = function () {
+            var receiver = self[opts.to];
+            return receiver[method].apply(receiver, arguments);
+          };
+        });
+      };
 
-            def self.included(base)
-              base.class_eval do
-                include ClassMethods
-                send(:attr_accessor, :subscribers, :name)
-              end
-            end
+      // simple usage example...
+      var musicBox = {
+        hendrix: {
+          playGuitar: function () { console.log('twanggggg'); }
+        }
+      }
+
+      musicBox.delegate('playGuitar', { to: 'Hendrix' });
+      musicBox.playGuitar();  //  console:  twanggggg
+%br
+.row
+  .col-md-12
+    %h1 Ruby Snippets
+    %br
+    %h4 Observer Pattern
+    %p I'm trying to deepen my understanding of how Ruby does it's magic.  This is a [very] basic implementation of the observer pattern.
+    :coderay
+      #!ruby
+
+      module Publisher
+        module ClassMethods
+          def publish(*args)
+            meth = args.shift
+            subscribers.each { |subscriber| subscriber.send(meth, name, *args) }
           end
 
-          module Subscriber
-            def subscribe_to(meth, handle_with: :method_missing)
-              define_method(meth) { |*args| send(handle_with, *args) }
-            end
+          def subscribe(subscriber)
+            subscribers << subscriber
           end
 
-          module NewspaperSubscriber
-            def read_news(newspaper, news)
-              puts "\#{newspaper} says: \#{news}"
-            end
-
-            def self.included(base)
-              base.send :extend, Subscriber
-              base.send :subscribe_to, :print_news, handle_with: :read_news
-            end
+          def unsubscribe(subscriber)
+            subscribers.delete(subscriber)
           end
+        end
 
-          class Newspaper
-            include Publisher
-
-            def initialize(name)
-              self.subscribers = []
-              self.name = name
-            end
+        def self.included(base)
+          base.class_eval do
+            include ClassMethods
+            send(:attr_accessor, :subscribers, :name)
           end
+        end
+      end
 
-          class Person
-            include NewspaperSubscriber
-          end
+      module Subscriber
+        def subscribe_to(meth, handle_with: :method_missing)
+          define_method(meth) { |*args| send(handle_with, *args) }
+        end
+      end
 
-          boston_globe = Newspaper.new('Boston Globe')
-          hudson_sun = Newspaper.new('Hudson Sun')
-          sports_fan = Person.new
+      module NewspaperSubscriber
+        def read_news(newspaper, news)
+          puts "\#{newspaper} says: \#{news}"
+        end
 
-          [boston_globe, hudson_sun].each { |newspapah| newspapah.subscribe(sports_fan) }
+        def self.included(base)
+          base.send :extend, Subscriber
+          base.send :subscribe_to, :print_news, handle_with: :read_news
+        end
+      end
 
-          boston_globe.publish(:print_news, 'It now costs $300 to see a Sox game.')
-          # Boston Globe says: It now costs $300 to see a Sox game!
+      class Newspaper
+        include Publisher
 
-          hudson_sun.publish(:print_news, 'Drew can play a mean trumpet.')
-          # Hudson Sun says: Drew can play a mean trumpet.
+        def initialize(name)
+          self.subscribers = []
+          self.name = name
+        end
+      end
+
+      class Person
+        include NewspaperSubscriber
+      end
+
+      boston_globe = Newspaper.new('Boston Globe')
+      hudson_sun = Newspaper.new('Hudson Sun')
+      sports_fan = Person.new
+
+      [boston_globe, hudson_sun].each { |newspapah| newspapah.subscribe(sports_fan) }
+
+      boston_globe.publish(:print_news, 'It now costs $300 to see a Sox game.')
+      # Boston Globe says: It now costs $300 to see a Sox game!
+
+      hudson_sun.publish(:print_news, 'Drew can play a mean trumpet.')
+      # Hudson Sun says: Drew can play a mean trumpet.
