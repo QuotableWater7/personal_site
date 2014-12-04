@@ -1,115 +1,16 @@
 .row
   .col-md-12
-    %span.disclaimer Disclaimer: &nbsp;
-    This code isn't particularly groundbreaking, but I'm keeping a list of code I find thought-provoking or useful.
-.row
-  .col-md-12
-    %h1 JavaScript Snippets
+    %h3 JavaScript Snippets
     %br
-    %h4 Delegator Pattern
-    :coderay
-      #!javascript
-
-      /*
-       * At work, we had several objects that received a method call and
-       * passed that message to one of the objects it was the owner of.
-       * Instead of having these custom methods, I wrote a delegator to
-       * write those methods automatically.
-       */
-
-      Object.prototype.delegate = function (methods, opts) {
-        var self = this;
-        if (_.isString(methods)) { methods = [methods]; }
-
-        _.each(methods, function (method) {
-          self[method] = function () {
-            var receiver = self[opts.to];
-            return receiver[method].apply(receiver, arguments);
-          };
-        });
-      };
-
-      // simple usage example...
-      var musicBox = {
-        hendrix: {
-          playGuitar: function () { console.log('twanggggg'); }
-        }
-      }
-
-      musicBox.delegate('playGuitar', { to: 'Hendrix' });
-      musicBox.playGuitar();  //  console:  twanggggg
+    = link_to 'Delegator Pattern', blog_index_path(post: 'delegator')
 %br
 .row
   .col-md-12
-    %h1 Ruby Snippets
+    %h3 Ruby Snippets
     %br
-    %h4 Observer Pattern
-    %p I'm trying to deepen my understanding of how Ruby does it's magic.  This is a [very] basic implementation of the observer pattern.
-    :coderay
-      #!ruby
-
-      module Publisher
-        module ClassMethods
-          def publish(*args)
-            meth = args.shift
-            subscribers.each { |subscriber| subscriber.send(meth, name, *args) }
-          end
-
-          def subscribe(subscriber)
-            subscribers << subscriber
-          end
-
-          def unsubscribe(subscriber)
-            subscribers.delete(subscriber)
-          end
-        end
-
-        def self.included(base)
-          base.class_eval do
-            include ClassMethods
-            send(:attr_accessor, :subscribers, :name)
-          end
-        end
-      end
-
-      module Subscriber
-        def subscribe_to(meth, handle_with: :method_missing)
-          define_method(meth) { |*args| send(handle_with, *args) }
-        end
-      end
-
-      module NewspaperSubscriber
-        def read_news(newspaper, news)
-          puts "\#{newspaper} says: \#{news}"
-        end
-
-        def self.included(base)
-          base.send :extend, Subscriber
-          base.send :subscribe_to, :print_news, handle_with: :read_news
-        end
-      end
-
-      class Newspaper
-        include Publisher
-
-        def initialize(name)
-          self.subscribers = []
-          self.name = name
-        end
-      end
-
-      class Person
-        include NewspaperSubscriber
-      end
-
-      boston_globe = Newspaper.new('Boston Globe')
-      hudson_sun = Newspaper.new('Hudson Sun')
-      sports_fan = Person.new
-
-      [boston_globe, hudson_sun].each { |newspapah| newspapah.subscribe(sports_fan) }
-
-      boston_globe.publish(:print_news, 'It now costs $300 to see a Sox game.')
-      # Boston Globe says: It now costs $300 to see a Sox game!
-
-      hudson_sun.publish(:print_news, 'Drew can play a mean trumpet.')
-      # Hudson Sun says: Drew can play a mean trumpet.
+    = link_to 'Publisher Subscribe', blog_index_path(post: 'publisher_subscribe')
+%hr
+.row
+  .col-md-12
+    %span.disclaimer Disclaimer: &nbsp;
+    This code isn't particularly groundbreaking, but I'd like to keep a reference to things I've experimented with.
