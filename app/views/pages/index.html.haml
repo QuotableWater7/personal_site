@@ -9,12 +9,12 @@
     %ul
       %li= link_to 'ChalkSchools', 'http://www.chalkschools.com', target: '_blank'
       %li= link_to 'Self Taught Music', 'http://selftaughtmusic.com', target: '_blank'
-      %li More to be posted...
+      %li More to come...
   #blog.card
     %h4.text-center Blog
-    .blog-article Article One
-    .blog-article Article Two
-    .blog-article Article Three
+    .blog-article= link_to 'Delegation in JavaScript', blog_index_path(post: 'delegator')
+    .blog-article= link_to 'Publisher Subscribe in Ruby', blog_index_path(post: 'publisher_subscribe')
+    .blog-article More to come...
   #music.card
     %h4.text-center My Music
     %ul
