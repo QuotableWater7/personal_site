@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get '/about' => 'pages#about'
   get '/music' => 'pages#music'
 
-  get '/blog' => 'blog#index'
+  resources :blog, only: :index
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

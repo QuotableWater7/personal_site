@@ -10,3 +10,5 @@
       .app-body
         .container-fluid.content-area
           = yield
+          - if @return_link
+            = link_to 'Back to Blog', blog_index_path

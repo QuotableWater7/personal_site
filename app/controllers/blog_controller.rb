@@ -10,6 +10,7 @@ class BlogController < ApplicationController
       render :index
     else
       post = (query_string.match /post=(.*)/).captures[0]
+      @return_link = true
       render post
     end
   end

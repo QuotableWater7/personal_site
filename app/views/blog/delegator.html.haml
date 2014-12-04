@@ -1,0 +1,34 @@
+.row
+  .col-md-12
+    %h4 Delegator Pattern
+    :coderay
+      #!javascript
+
+      /*
+       * At work, we had several objects that received a method call and
+       * passed that message to one of the objects it was the owner of.
+       * Instead of having these custom methods, I wrote a delegator to
+       * write those methods automatically.
+       */
+
+      Object.prototype.delegate = function (methods, opts) {
+        var self = this;
+        if (_.isString(methods)) { methods = [methods]; }
+
+        _.each(methods, function (method) {
+          self[method] = function () {
+            var receiver = self[opts.to];
+            return receiver[method].apply(receiver, arguments);
+          };
+        });
+      };
+
+      // simple usage example...
+      var musicBox = {
+        hendrix: {
+          playGuitar: function () { console.log('twanggggg'); }
+        }
+      }
+
+      musicBox.delegate('playGuitar', { to: 'hendrix' });
+      musicBox.playGuitar();  //  console:  twanggggg
