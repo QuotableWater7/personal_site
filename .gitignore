@@ -17,3 +17,5 @@
 
 ./vendor/cache
 *.DS_Store
+
+/public/assets/*

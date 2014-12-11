@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+ruby '2.1.2'
 
 gem 'rails', '4.1.1'
 gem 'sass-rails'
@@ -11,7 +11,7 @@ gem 'bootstrap-sass', '~> 3.3.1'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'bcrypt', '~> 3.1.7'
-gem 'debugger', group: [:development, :test]
+gem 'pry-byebug'
 
 gem 'haml-rails'
 gem 'coderay', '~> 1.1.0'   # syntax highlighting
