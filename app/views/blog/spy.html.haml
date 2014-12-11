@@ -19,12 +19,12 @@
       }
 
       var blah = {
-        old: function () {
-          console.log('this is the old section');
-        }
+        old: function () { }
       }
 
       var spy = new Spy(blah, 'old');
-      console.log('called before?', spy.called);
+      console.log('called before?', spy.called);  // false
       blah.old();
-      console.log('called after?', spy.called);
+      console.log('called after?', spy.called);   // true
+
+      'Cool!';
