@@ -16,6 +16,7 @@ gem 'pry-byebug'
 gem 'haml-rails'
 gem 'coderay', '~> 1.1.0'   # syntax highlighting
 gem 'haml-coderay'
+gem 'underscore-rails'
 
 group :production do
   gem 'pg'
