@@ -1,0 +1,30 @@
+.row
+  .col-md-12
+    %h4 Spies (Proxies) in JavaScript
+    %p Nothing too exciting here, but I've noticed testing frameworks in Ruby and JavaScript making use of spies.  I created a very simple implementation just to make sure I understand how they work.
+    :coderay
+      #!javascript
+
+      var Spy = function (source, func) {
+        var self = this;
+        self.called = false;
+
+        var old_func = source[func];
+        var new_func = function () {
+          old_func.apply(source, arguments);
+          self.called = true;
+        }
+
+        source[func] = new_func;
+      }
+
+      var blah = {
+        old: function () { }
+      }
+
+      var spy = new Spy(blah, 'old');
+      console.log('called before?', spy.called);  // false
+      blah.old();
+      console.log('called after?', spy.called);   // true
+
+      'Cool!';
