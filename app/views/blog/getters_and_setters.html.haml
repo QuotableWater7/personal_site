@@ -1,0 +1,39 @@
+.row
+  .col-md-12
+    %h4 Getters and Setters in Ruby
+    %p I wanted to see how a simple method like attr_accessor would be implemented, and here is what I came up with.
+    :coderay
+      #!ruby
+
+      class Object
+        def self.get_n_set(*args)
+          code = ''
+          args.each do |arg|
+            attribute = arg.to_s
+            code += %Q{
+              def \#{attribute}=(val)
+                @\#{attribute} = val
+              end
+
+              def \#{attribute}
+                @\#{attribute}
+              end
+            }
+          end
+
+          class_eval(code)
+        end
+      end
+
+      class Example
+        get_n_set :name, :age
+
+        def initialize
+          self.name = 'JT'
+          self.age = 26
+        end
+      end
+
+      example = Example.new
+      puts example.name       # JT
+      puts example.age        # 26
