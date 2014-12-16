@@ -1,0 +1,18 @@
+.row
+  .col-md-12
+    %h4 How does JavaScript's "bind" work?
+    %p First off, what is it used for?  When JavaScript an event handler is invoked on an object, the value of 'this' is not set to the object the method belongs to; rather the DOM element is the value of 'this'.  If we want the method to permanently be stuck to its object, we can use bind.  See below:
+    :coderay
+      #!javascript
+
+      var my_object = {
+        respondToSomething: function () {
+          this.sayHi();
+        },
+
+        sayHi: function () {
+          alert('Hi');
+        }
+      }
+
+      my_object.bind
