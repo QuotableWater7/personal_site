@@ -1,0 +1,48 @@
+.row
+  .col-md-12
+    %h4 Delegator Pattern
+    %p After using the delegator pattern with my Rails apps, I was curious how it might be implemented.  This is a very basic approach to it - literally just passing along the same arguments to the owned object without checking to make sure the object exists or doing anything fancy.
+    :coderay
+      #!ruby
+
+      class Object
+
+        def self.delegate(*args)
+          to = args.pop[:to].to_s
+
+          method_definitions = args.map do |meth|
+            string_meth = meth.to_s
+            " \
+              def \#{string_meth}(*args) \
+                \#{to}.\#{string_meth}(*args) \
+              end \
+            "
+          end
+          class_eval(method_definitions.join(';'))
+        end
+
+      end
+
+      class Cat
+        def purr
+          puts 'purr'
+        end
+
+        def meow
+          puts 'meow'
+        end
+      end
+
+      class CatOwner
+        attr_accessor :cat
+
+        delegate :purr, :meow, to: :cat
+
+        def initialize
+          self.cat = Cat.new
+        end
+      end
+
+      cat_owner = CatOwner.new
+      cat_owner.purr  # purr
+      cat_owner.meow  # meow
