@@ -4,7 +4,6 @@ class BlogController < ApplicationController
 
   def index
     query_string = request.query_string
-    p query_string
 
     if query_string.empty?
       render :index
@@ -13,6 +12,16 @@ class BlogController < ApplicationController
       @return_link = true
       render post
     end
+  end
+
+
+
+  def blah=(value)
+    @blah = value
+  end
+
+  def blah
+    @blah
   end
 
 end
