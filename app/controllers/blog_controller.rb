@@ -8,6 +8,7 @@ class BlogController < ApplicationController
     if query_string.empty?
       render :index
     else
+      @disqus = true
       post = (query_string.match /post=(.*)/).captures[0]
       @return_link = true
       render post
