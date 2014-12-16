@@ -9,9 +9,10 @@ class BlogController < ApplicationController
       render :index
     else
       @disqus = true
-      post = (query_string.match /post=(.*)/).captures[0]
       @return_link = true
-      render post
+      post = (query_string.match /post=(\w+)/).captures[0]
+      lang = (query_string.match /lang=(\w+)/).captures[0]
+      render "blog/#{lang}/#{post}"
     end
   end
 
