@@ -1,15 +1,10 @@
 .row
   .col-md-12
     %h4 Delegator Pattern
+    %p At work, we had several objects that received a method call and passed that message to one of the objects it was the owner of. Instead of having these custom methods, I wrote a delegator to write those methods automatically.
+
     :coderay
       #!javascript
-
-      /*
-       * At work, we had several objects that received a method call and
-       * passed that message to one of the objects it was the owner of.
-       * Instead of having these custom methods, I wrote a delegator to
-       * write those methods automatically.
-       */
 
       Object.prototype.delegate = function (methods, opts) {
         var self = this;
