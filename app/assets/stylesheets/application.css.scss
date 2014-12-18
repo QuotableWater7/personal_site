@@ -161,3 +161,11 @@ section {
     padding-left: 20px;
   }
 }
+
+.CodeRay {
+  width: 100%;
+
+  .line-numbers {
+    width: 30px;
+  }
+}

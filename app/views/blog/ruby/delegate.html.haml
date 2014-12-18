@@ -22,7 +22,10 @@
         end
 
       end
+    %br
     %p This is a <i>very</i> basic approach to delegation, as I didn't provide any nice features like prefixes on delegated methods.  These come in handy when both the object and one of the objects that you delegate to have a method with the same name.
+    %p Continuing along, I'll show a simple example of actually using the delegator shown above:
+    %br
     :coderay
       #!ruby
 
@@ -49,3 +52,25 @@
       cat_owner = CatOwner.new
       cat_owner.purr  # purr
       cat_owner.meow  # meow
+    %br
+    %p As you can see, this works pretty much identical to the delegator you'll find in rails.  If we wanted to add prefixing, we could modify the original delegator like so (changes on lines 4, 8, and 10):
+    %br
+    :coderay
+      #!ruby
+
+      def self.delegate(*args)
+        options = args.pop
+        to = options[:to].to_s
+        prefix = options[:prefix] == true
+
+        method_definitions = args.map do |meth|
+          string_meth = meth.to_s
+          host_meth = prefix ? "\#{to}_\#{string_meth}" : string_meth
+          " \
+            def \#{host_meth}(*args) \
+              \#{to}.\#{string_meth}(*args) \
+            end \
+          "
+        end
+        class_eval(method_definitions.join(';'))
+      end
