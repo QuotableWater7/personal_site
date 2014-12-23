@@ -1,28 +1,63 @@
 .row
   .col-md-12
     %h4 Functional Programming in JavaScript
-    %p Over time, I found myself using more and more functional programming to accomplish tasks on our back end infrastructure.  It was only natural to explore how those techniques could be applied on the front end as well.  Even though various libraries provide functional capabilities, I did find that implementing the functions on my own helped bake the knowledge into my brain.
-    %p Here is an example of how an `each` method might be implemented in Underscore or Lo-Dash:
+    %p Over time, I found myself using more and more functional programming to accomplish tasks on our back end infrastructure.  It was only natural to explore how those techniques could be applied on the front end as well.  Even though various libraries provide functional capabilities, I did find that implementing the functions on my own helped bake the knowledge into my brain.  These do NOT reflect how either Underscore or Low-Dash implement the functions; rather, I illustrate one possible (and probably naive) implementation.
+    %h5 _.map
+    %p <b>Map</b> is a really simple concept: return a new array that has applied some transformation on each element in the source array.
     :coderay
       #!javascript
 
-      function myEach(array, func) {
+      var _ = {};
+
+      _.each = function (array, func) {
         var i;
         var output = [];
 
         for (i = 0; i < array.length; i++) {
-          output[i] = func(array[i]);
+          output[i] = func(array[i], i);
         }
 
         return output;
-      }
+      };
 
-    %p And a usage example:
+    %p Usage example:
     :coderay
       #!javascript
 
       var test_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-      var new_array = myEach(test_array, function (item) {
+      var new_array = _.map(test_array, function (item, index) {
         return item * 2;
       });
-      // returns [2, 4, 6, ..., 20]
+
+      // new_array is now [2, 4, 6, ..., 20]
+    %br
+    %h5 _.each
+    %p <b>Each</b> is similar to <b>map</b>, with the exception that it doesn't return anything other than undefined...  It is useful for modifying other variables that are within the same scope.
+    :coderay
+      #!javascript
+
+      _.each = function (array, func) {
+        var i;
+
+        for (i = 0; i < array.length; i++) {
+          func(array[i], i);
+        }
+      };
+    %p Usage example:
+    :coderay
+      #!javascript
+
+      var bunchOfThings = {};
+      var test_array = ['a', 'b', 'c', 'd'];
+
+      _.each(test_array, function (item, index) {
+        bunchOfThings['item_' + index] = item;
+      });
+
+      // bunchOfThings now looks like this:
+      {
+        item_1: 'a',
+        item_2: 'b',
+        item_3: 'c',
+        item_4: 'd'
+      }
