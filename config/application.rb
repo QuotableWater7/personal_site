@@ -8,7 +8,7 @@ Bundler.require(*Rails.groups)
 
 module HelloWorld
   class Application < Rails::Application
-    Haml::Filters::CodeRay.encoder_options = { line_numbers: :table }
+    # Haml::Filters::CodeRay.encoder_options = { line_numbers: :table }
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

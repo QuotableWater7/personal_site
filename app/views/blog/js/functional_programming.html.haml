@@ -1,0 +1,28 @@
+.row
+  .col-md-12
+    %h4 Functional Programming in JavaScript
+    %p Over time, I found myself using more and more functional programming to accomplish tasks on our back end infrastructure.  It was only natural to explore how those techniques could be applied on the front end as well.  Even though various libraries provide functional capabilities, I did find that implementing the functions on my own helped bake the knowledge into my brain.
+    %p Here is an example of how an `each` method might be implemented in Underscore or Lo-Dash:
+    :coderay
+      #!javascript
+
+      function myEach(array, func) {
+        var i;
+        var output = [];
+
+        for (i = 0; i < array.length; i++) {
+          output[i] = func(array[i]);
+        }
+
+        return output;
+      }
+
+    %p And a usage example:
+    :coderay
+      #!javascript
+
+      var test_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+      var new_array = myEach(test_array, function (item) {
+        return item * 2;
+      });
+      // returns [2, 4, 6, ..., 20]
