@@ -1,7 +1,7 @@
 .row
   .col-md-12
     %h4 Functional Programming in JavaScript
-    %p Over time, I found myself using more and more functional programming to accomplish tasks on our back end infrastructure.  It was only natural to explore how those techniques could be applied on the front end as well.  Even though various libraries provide functional capabilities, I did find that implementing the functions on my own helped bake the knowledge into my brain.  These do NOT reflect how either Underscore or Low-Dash implement the functions; rather, I illustrate one possible (and probably naive) implementation.
+    %p Over time, I found myself using more and more functional programming techniques to accomplish tasks on our back end at ChalkSchools.  It was a natural next step to apply these techniques on the front end as well.  Even though various libraries provide functional capabilities, I did find that implementing the functions on my own helped bake the knowledge into my brain.  These do NOT reflect how either Underscore or Low-Dash implement the functions; rather, I illustrate one possible (and probably naive) implementation.  I am not worrying about browser inconsistencies, speed, or anything other than versions that just so happen to work in the Chrome browser I am currently on.
     %h5 _.map
     %p <b>Map</b> is a really simple concept: return a new array that has applied some transformation on each element in the source array.
     :coderay
@@ -9,11 +9,10 @@
 
       var _ = {};
 
-      _.each = function (array, func) {
-        var i;
+      _.map = function (array, func) {
         var output = [];
 
-        for (i = 0; i < array.length; i++) {
+        for (var i = 0; i < array.length; i++) {
           output[i] = func(array[i], i);
         }
 
@@ -37,9 +36,7 @@
       #!javascript
 
       _.each = function (array, func) {
-        var i;
-
-        for (i = 0; i < array.length; i++) {
+        for (var i = 0; i < array.length; i++) {
           func(array[i], i);
         }
       };
@@ -61,3 +58,33 @@
         item_3: 'c',
         item_4: 'd'
       }
+    %br
+    %h5 _.reduce
+    %p The last example I will run through here is the reduce function.  The idea behind this function is simple: pass in array and an aggregator function, and boil the array down to a single result value.  Here is my take:
+    :coderay
+      #!javascript
+
+      _.reduce = function (array, func, memo) {
+        for (var i = 0; i < array.length; i++) {
+          memo = func(array[i], memo);
+        }
+
+        return memo;
+      };
+    %p Usage example:
+    :coderay
+      #!javascript
+
+      _.reduce(
+        [1,2,3],
+        function (num, memo) { return num + memo; },
+        10
+      );
+      // returns the value 16: 10 + 1 + 2 + 3
+
+      _.reduce(
+        ['a', 'cat.'],
+        function (word, memo) { return memo + ' ' + word; },
+        'I am'
+      );
+      // returns 'I am a cat.'
