@@ -1,16 +1,20 @@
 .row
   .col-md-12
     %h4 Delegator Pattern
-    %p At work, we had several objects that received a method call and passed that message to one of the objects it was the owner of. Instead of having these custom methods, I wrote a delegator to write those methods automatically.
+    %p I've found many times where I was writing methods that simply passed along the method/arguments to another object.  Once I had done this 3, 4 times, it started to clutter up the code for the original object.  The code below takes a list of methods and an object to forward them along to, and then writes the methods automatically.
 
     :coderay
       #!javascript
 
+      // note: I don't ever modify Object's prototype directly in my codebase
+
       Object.prototype.delegate = function (methods, opts) {
-        var self = this;
-        if (_.isString(methods)) { methods = [methods]; }
+        var self = this;  // save a reference to the object doing the delegating
+
+        if (_.isString(methods)) { methods = [methods]; } // normalize methods to array
 
         _.each(methods, function (method) {
+          // dynamically create a method that passes the arguments along to the receiver's method of same name
           self[method] = function () {
             var receiver = self[opts.to];
             return receiver[method].apply(receiver, arguments);
